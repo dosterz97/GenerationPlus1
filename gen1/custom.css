@@ -1,0 +1,34 @@
+.navbar {
+	
+	
+}
+
+.navbar a {
+	margin:10px;	
+}
+
+.navbar li {
+	margin: 10px 15px 10px 5px;	
+}
+
+.navbar-brand  {
+	height:auto!important;
+	padding:0;	
+}
+
+#navbarOverride {
+	background-color:white;
+	border-top:3px black solid;
+	border-bottom:3px black solid;	
+}
+
+.navbar-default .navbar-nav>li>a {
+	color:black;	
+	font-size:16px;
+}
+
+.logo
+{
+	width:150px;
+	margin:0;	
+}
