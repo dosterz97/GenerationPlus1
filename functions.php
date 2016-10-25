@@ -150,3 +150,108 @@ function bootstrapScripts() {
 	wp_enqueue_script('bootstrapjsmain_footer', get_bloginfo('stylesheet_directory') . '/bootstrap/js/bootstrap.min.js', '', '', true);
 }
 add_action( 'wp_enqueue_scripts', 'bootstrapScripts',0 );
+
+function templateStuff(){
+	// check if the flexible content field has rows of data
+	if( have_rows('element_creator') ):
+	
+		// loop through the rows of data
+		while ( have_rows('element_creator') ) : the_row();
+	
+			// check current row layout
+			//////////////////////////////////
+			//Header Picture
+			//////////////////////////////////
+			if( get_row_layout() == 'header_picture' ):
+				echo '<div class="header_picture container-fluid nopadding">';
+				
+					echo '<div class="col-xs-12">';
+						// display a sub field value
+						$image = get_sub_field('image');
+						if( !empty($image) ): ?>
+						<div class="slide" style="background-image: url(<?php echo $image['url']; ?>">
+						<div class="image_text">
+							<?php 
+							echo '<div class="image_title">';	
+							echo get_sub_field('image_text');
+							echo '</div>';	
+							echo '<div class="image_subtext">';						
+							echo get_sub_field('image_subtext');
+							echo '</div>';
+							
+							echo '<div class="container-fluid button_text">';
+							echo '<a href="'.get_sub_field('header_button').'" class="btn btn-primary">'.get_sub_field('button_text').'</a>';
+							echo '</div>';
+							
+							?>
+						</div>
+						</div>
+						<?php endif;
+						
+						
+						
+					echo '</div>';
+								
+				echo '</div>';
+			//////////////////////////////////
+			//Glyphicons
+			//////////////////////////////////
+			elseif( get_row_layout() == 'glyphicon_area' ):
+				
+				echo '<div class="glyphiconarea">';//Give styles to the glyphicon area
+				
+				echo '<div class="container">';
+				
+				if( have_rows('glyphicon_repeater') ):
+						
+					// loop through the rows of data
+					while ( have_rows('glyphicon_repeater') ) : the_row();
+						
+						echo '<div class="col-xs-12 col-md-4">';
+						// display a sub field value
+						
+						$image = get_sub_field('image');
+
+						if( !empty($image) ): ?>
+
+						<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" />
+
+						<?php endif;
+						echo '<div class="glyphicon_title">';
+						echo get_sub_field('title');
+						echo '</div>';
+						echo get_sub_field('description');
+						
+						echo '</div>';
+				
+					endwhile;
+				endif;
+				
+				echo '</div>';
+				echo '</div>';
+			//////////////////////////////////
+			//Home Header
+			//////////////////////////////////
+			elseif( get_row_layout() == 'home_header'):
+				echo '<div class="home_header">';
+					echo '<div class="container-fluid nopadding">';
+						echo '<div class="homearound">';
+						echo '<div class="home_header_title">';
+							echo get_sub_field('title');
+						echo '</div>';
+						echo '<div class="home_header_subtitle">';
+							echo get_sub_field('subtitle');
+						echo '</div>';
+						echo '</div>';
+					echo '</div>';
+				echo '</div>';
+					
+						
+				
+			endif;
+			
+	
+		endwhile;
+	
+	endif;
+}

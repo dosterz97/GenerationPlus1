@@ -1,3 +1,13 @@
+.nopadding
+{
+	padding: 0;	
+}
+
+.img-responsive
+{
+	width: 100%;	
+}
+
 .navbar {
 	
 	
@@ -7,6 +17,9 @@
 	margin:10px;	
 }
 
+.navbar img {
+	margin-top:5px;	
+}
 .navbar li {
 	margin: 10px 15px 10px 5px;	
 }
@@ -18,8 +31,9 @@
 
 #navbarOverride {
 	background-color:white;
-	border-top:3px black solid;
-	border-bottom:3px black solid;	
+	border-top:5px black solid;
+	border-bottom:5px black solid;	
+	margin-bottom:0;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -27,8 +41,119 @@
 	font-size:16px;
 }
 
-.logo
-{
+.logo {
 	width:150px;
-	margin:0;	
+	margin:20px 0 0 0;	
 }
+
+.header_picture {
+    overflow:hidden;
+}
+
+.header_picture > .col-xs-12
+{
+	padding:0px;	
+}
+
+.header_picture img {
+  width:100%;
+
+}
+.slide {
+	padding-top: 200px;
+	background-size: cover;
+	padding-bottom:200px;	
+	background-position: center;
+}
+.image_text {
+	background:rgba(0,0,0,0.5);	
+	text-align:center;
+}
+.image_text p {
+	margin:0px;	
+}
+.image_title {
+	padding-top:10px;
+	font-size:48px;
+	color:white;
+
+}
+
+.image_subtext {
+	font-size:30px;
+	color:white;	
+	margin-bottom: 10px;
+}
+.image_button {
+	height:1px;
+}
+
+.btn {
+	color:white;
+	font-size:16px;
+	border-radius: 30px;
+    background: #1C1B41;
+    padding: 18px; 
+    width: 200px;
+    height: 60px; 
+	margin-bottom:15px;	
+	border:none;
+	
+}
+
+.button_text a:visited{
+	color:white;
+}
+.glyphiconarea {
+	background-color:#cccccc;
+	padding:50px 20px 50px 20px;
+	text-align:center;
+}
+.glyphiconarea img {
+	padding-top: 20px;	
+}
+
+.glyphicon_title {
+	padding:30px 0 0 0;
+	font-size:18px;
+	font-style:oblique;
+}
+
+.home_header {
+	margin:30px 0 30px 0;
+	text-align:center;	
+}
+
+.home_header_title {
+	font-size:40px;
+	display: inline-block;
+	padding: 0 30px;
+	position: relative;
+}
+.home_header_subtitle {
+	font-size:24px;
+	color:grey;
+}
+
+
+
+.home_header_title:before,
+.home_header_title:after {
+  background: black;
+  content: "";
+  display: block;
+  height: 5px;
+  position: absolute;
+    top: 50%;
+  width: 500%;
+}
+
+.home_header_title:before {
+  right: 100%;
+}
+
+.home_header_title:after {
+  left: 100%;
+}
+
+
