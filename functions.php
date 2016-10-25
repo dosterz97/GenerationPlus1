@@ -45,6 +45,7 @@ function gen1_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
 		'primary' => esc_html__( 'Primary', 'gen1' ),
+		'footer' => esc_html__('Footer','gen1')
 	) );
 
 	/*
@@ -207,7 +208,7 @@ function templateStuff(){
 					// loop through the rows of data
 					while ( have_rows('glyphicon_repeater') ) : the_row();
 						
-						echo '<div class="col-xs-12 col-md-4">';
+						echo '<div class="col-xs-12 col-sm-4">';
 						// display a sub field value
 						
 						$image = get_sub_field('image');

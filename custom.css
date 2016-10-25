@@ -2,7 +2,9 @@
 {
 	padding: 0;	
 }
-
+.nomargin {
+	margin:0;	
+}
 .img-responsive
 {
 	width: 100%;	
@@ -129,12 +131,29 @@
 	display: inline-block;
 	padding: 0 30px;
 	position: relative;
+	width:33.333333333%;
 }
 .home_header_subtitle {
 	font-size:24px;
 	color:grey;
 }
+@media (max-width:768px)
+{
+	.home_header_title {
+		width:100%;	
+	}
+	
+}
 
+@media (max-width:884px) 
+{
+	.home_header_title {
+		font-size:34px;	
+	}
+	.hom_header_subtitle {
+		font-size:18px;	
+	}
+}
 
 
 .home_header_title:before,
@@ -145,7 +164,7 @@
   height: 5px;
   position: absolute;
     top: 50%;
-  width: 500%;
+  width: 100%;
 }
 
 .home_header_title:before {
@@ -157,3 +176,16 @@
 }
 
 
+#footer_nav {
+	background-color:#000;
+}
+
+#footer ul li a {
+	padding:20px;	
+	color:white;
+
+}
+
+.footer_links a {
+	color:white!important;	
+}
