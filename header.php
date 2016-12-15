@@ -44,7 +44,7 @@
             
           </div>
           <div id="navbar" class="navbar-collapse collapse">
-		  <a class="navbar-brand site-branding logo" href="#"><img src="<?php echo get_bloginfo('stylesheet_directory' ); ?>/images/genplus1_4C.png" alt="generation + 1 logo"/></a>
+		  <a class="navbar-brand site-branding logo" href="<?php echo get_home_url();?>"><img src="<?php echo get_bloginfo('stylesheet_directory' ); ?>/images/genplus1_4C.png" alt="generation + 1 logo"/></a>
             <?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_id' => 'primary-menu', 'menu_class' => 'nav navbar-nav navbar-right' ) ); ?>
       
           </div><!--/.nav-collapse -->

@@ -105,9 +105,7 @@ add_action( 'widgets_init', 'gen1_widgets_init' );
 function gen1_scripts() {
 	wp_enqueue_style( 'gen1-style', get_stylesheet_uri() );
 	
-	//load the raleway font
-	wp_enqueue_style('gen1-google-fonts','https://fonts.googleapis.com/css?family=Raleway');
-
+	
 	wp_enqueue_script( 'gen1-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
 	wp_enqueue_script( 'gen1-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
@@ -144,13 +142,66 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/jetpack.php';
 
 
+
+
+
+
+
+
+
+
+
+
+/**********My Stuff**********/
+function create_post_type() {
+	register_post_type( 'projects',
+		array(
+			'labels' => array(
+				'name' => __( 'Projects' ),
+				'singular_name' => __( 'Projects' )
+			),
+		'public' => true,
+		'has_archive' => false,
+		'supports' => array( 'title', 'editor','custom-fields', 'thumbnail', 'page-attributes'),
+		'menu_position' => 5,
+		'hierarchical' => true,
+		)
+	);
+	
+	register_post_type( 'courses',
+		array(
+			'labels' => array(
+				'name' => __( 'Courses' ),
+				'singular_name' => __( 'Course' )
+			),
+		'public' => true,
+		'has_archive' => false,
+		'supports' => array( 'title', 'editor','custom-fields', 'thumbnail', 'page-attributes'),
+		'menu_position' => 5,
+		'hierarchical' => true,
+		)
+	);
+}
+add_action( 'init', 'create_post_type' );
+
 function bootstrapScripts() {
 	wp_enqueue_style('bootstrapcssmin', get_bloginfo('stylesheet_directory') . '/bootstrap/css/bootstrap.min.css');
 	wp_enqueue_style('bootstrapthememin', get_bloginfo('stylesheet_directory') . '/bootstrap/css/bootstrap-theme.min.css');
+	wp_enqueue_script('projectDropdown', get_bloginfo('stylesheet_directory'). '/js/projectDropdown.js',array('jquery'),'',true);
+	wp_enqueue_script('bootstrapjsmain_footer', get_bloginfo('stylesheet_directory') . '/bootstrap/js/bootstrap.min.js',array('jquery'),'v3',true);
+	//my javascript file
 	
-	wp_enqueue_script('bootstrapjsmain_footer', get_bloginfo('stylesheet_directory') . '/bootstrap/js/bootstrap.min.js', '', '', true);
+	
+	//load the raleway font
+	wp_enqueue_style('gen1-google-fonts', 'https://fonts.googleapis.com/css?family=Raleway|Yellowtail');
+	//load the yellowtail font
+	//load the local mono social icons font
+	wp_enqueue_style('gen1-local-fonts', get_bloginfo('stylesheet_directory') . '/fonts/monosocialicons/monosocialiconsfont.css');	
 }
+
 add_action( 'wp_enqueue_scripts', 'bootstrapScripts',0 );
+
+
 
 function templateStuff(){
 	// check if the flexible content field has rows of data
@@ -167,7 +218,7 @@ function templateStuff(){
 				echo '<div class="header_picture container-fluid nopadding">';
 				
 					echo '<div class="col-xs-12">';
-						// display a sub field value
+						// display a sub field valued
 						$image = get_sub_field('image');
 						if( !empty($image) ): ?>
 						<div class="slide" style="background-image: url(<?php echo $image['url']; ?>">
@@ -183,7 +234,6 @@ function templateStuff(){
 							echo '<div class="container-fluid button_text">';
 							echo '<a href="'.get_sub_field('header_button').'" class="btn btn-primary">'.get_sub_field('button_text').'</a>';
 							echo '</div>';
-							
 							?>
 						</div>
 						</div>
@@ -231,6 +281,93 @@ function templateStuff(){
 				echo '</div>';
 				echo '</div>';
 			//////////////////////////////////
+			//Questions
+			//////////////////////////////////
+			elseif( get_row_layout() == 'question_area' ):?>				
+				
+				<div class="container questionMargin">
+					
+				<?php if( have_rows('question_repeater') ):
+					
+						$counter = 0;
+					// loop through the rows of data
+					while ( have_rows('question_repeater') ) : the_row(); 
+						if($counter% 2 == 0) :
+							echo '<div class="row questionOutline">';	
+						
+						endif;
+						$counter++;
+						?>
+						
+						<div class="col-xs-12 col-sm-6">
+							<div class="question">
+								<?php echo get_sub_field('question');?>
+							</div>
+							<div class="answer">
+								<?php echo get_sub_field('answer');?>
+							</div>						
+						</div>
+						<?php
+						if($counter% 2==0) :
+							echo '</div>';
+						endif; 				
+					endwhile;
+				endif;?>
+				</div>
+			<?php
+			//////////////////////////////////
+			//Sign Up Options
+			//////////////////////////////////
+			elseif( get_row_layout() == 'sign_up_area' ): ?>
+					
+					<?php if( have_rows('sign_up_repeater') ):
+					?>
+					<div class="container">
+					<?php 	
+					// loop through the rows of data
+					while ( have_rows('sign_up_repeater') ) : the_row();?>
+						<div class="col-xs-12 col-md-4" >
+							<div class="sign_up row" style="border-top:<?php echo get_sub_field('color'); ?> solid 5px">
+								<div class="top">
+									<div class="sign_up_title col-xs-6">
+										<?php echo get_sub_field('title'); ?>
+									</div>
+									<div class="price col-xs-6">
+										<?php echo get_sub_field('price'); ?>
+									</div>
+								</div>
+								<div class="sign_up_body col-xs-12">
+									<?php echo get_sub_field('description'); ?>
+								</div>
+								<div class="col-xs-12 sign_up_benefits">
+									<?php echo get_sub_field('benefits'); ?>
+								</div>
+								<?php 
+								$button = get_sub_field('image');
+								if(get_sub_field('price')=='Free'): ?>
+									<div class="col-sm-3"></div>
+									<div class="col-xs-12 col-sm-6 sign_up_button" style="background-color:<?php echo get_sub_field('color'); ?>">
+											<a href="http://localhost/Gen1/membership-join/membership-registration/"><?php echo get_sub_field('button'); ?></a>								
+									</div>
+									<div class="col-sm-3"></div>
+								<?php 
+								elseif(get_sub_field('price')=='$25'): ?>
+									<div class="col-sm-3"></div>
+									<div class="col-xs-12 col-sm-6 sign_up_button" style="background-color:<?php echo get_sub_field('color'); ?>">
+											<?php echo do_shortcode('[swpm_payment_button id=225]');?>							
+									</div>
+									<div class="col-sm-3"></div>								
+								<?php endif;?>
+							</div>
+						</div>
+						
+						<?php 
+					endwhile;
+				endif; ?>
+				</div>
+				<?php
+				
+			//////////////////////////////////
 			//Home Header
 			//////////////////////////////////
 			elseif( get_row_layout() == 'home_header'):
@@ -246,11 +383,205 @@ function templateStuff(){
 						echo '</div>';
 					echo '</div>';
 				echo '</div>';
-					
+			//////////////////////////////////
+			//Login
+			//////////////////////////////////
+			elseif( get_row_layout() == 'login'):
+					?><div class="container">
+						<div class="col-sm-2 col-md-4"></div>
+						<div class="login col-sm-8 col-md-4 login"><?php
+						echo do_shortcode('[swpm_login_form]');
+						?></div>
+						<div class="col-sm-2 col-md-4"></div>
+					</div><?php
+			//////////////////////////////////
+			//Register
+			//////////////////////////////////
+			elseif( get_row_layout() == 'register'):
+					?><div class="container">
+						<div class="col-sm-2 col-md-3"></div>
+						<div class="login col-sm-8 col-md-6 login"><?php
+						echo do_shortcode('[swpm_registration_form]');
+						?></div>
+						<div class="col-sm-2 col-md-3"></div>
+					</div><?php
+			//////////////////////////////////
+			//Forgot Password
+			//////////////////////////////////
+			elseif( get_row_layout() == 'forgot_password'):
+					?><div class="container">
+						<div class="col-sm-2 col-md-3"></div>
+						<div class="login col-sm-8 col-md-6"><?php
+						echo do_shortcode('[swpm_reset_form]');
+						?></div>
+						<div class="col-sm-2 col-md-3"></div>
+					</div><?php
+			
+			//////////////////////////////////
+			//Contribute
+			//////////////////////////////////
+			elseif( get_row_layout() == 'contribute'):
+				echo '<div class="contribute">';
+					echo '<div class="container nopadding">';
+						echo '<div class="col-md-6">';
+							$image = get_sub_field('contribute_image');
+							if( !empty($image) ):?>
+								<img src="<?php echo $image['url']?>" alt="Contriubte to my website"/>
+								<?php
+							endif;?>
+						</div>
+						<div class="col-md-6">
+						<div class="contribute_title">
+						<?php
+							echo get_sub_field('text_title');
+						?>
+						</div>
+						<div class="contribute_text">
+							<?php echo get_sub_field('contribute_text');?>
+						</div>
+						<div class="container-fluid button_text">
+							<?php
+							if(get_sub_field('button_text') != "hidden"):
+							 echo '<a href="'.get_sub_field('button_link').'" class="btn btn-primary">'.get_sub_field('button_text').'</a>';
+							 endif;?>
+						</div>
 						
+						</div>
+					</div>
+				</div>
+				<?php
+				
+			//////////////////////////////////
+			//Projects
+			//////////////////////////////////
+			elseif( get_row_layout() == 'project_archive' ):
+				$count = 0;
+				// The Query
+				$args = array('post_type' => 'projects', 'posts_per_page' => -1);
+					$the_query = new WP_Query( $args );
+					?>
+					  <div class="container nopadding projectRow">
+					  <?php
+					// The Loop
+					if ( $the_query->have_posts() ) {
+						while ( $the_query->have_posts() ) {
+							$the_query->the_post();
+							$image = get_field('project_image');
+								if( !empty($image) ): ?>
+								
+								<div class=" col-xs-12 col-sm-6 col-md-4 col-lg-3 small-padding">
+								<a href="<?php echo get_permalink($post->ID); ?>" class="project-hover" >
+								<div class="slide home_course" style= "background-image: url(<?php echo $image['url']; ?>) ">
+								<div class="home_course_text">
+									<?php 
+									echo  get_the_title();
+									?>
+								</div>
+								<?php endif;
+								?>
+								</div>
+								</a>
+								</div>
+								<?php
+							
+						}
+						/* Restore original Post Data */
+						wp_reset_postdata();
+					}
+					?>
+					</div>
+					<?php
+			//////////////////////////////////
+			//Courses
+			//////////////////////////////////
+			elseif( get_row_layout() == 'course_archive' ):
+				$count = 0;
+				// The Query
+				$args = array('post_type' => 'courses', 'posts_per_page' => -1);
+					$the_query = new WP_Query( $args );
+					?>
+					<div class="panel-group">
+					  <div class="panel panel-default container nopadding">
+					  <?php
+					// The Loop
+					if ( $the_query->have_posts() ) {
+						while ( $the_query->have_posts() ) {
+							$the_query->the_post();
+							if(is_front_page())
+							{
+								$image = get_field('course_image');
+								if( !empty($image) ): ?>
+								
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 small-padding ">
+								<a class="home-course" href="<?php echo get_permalink($post->ID); ?>" >
+								<div class="slide home_course" style= "background-image: url(<?php echo $image['url']; ?>) ">
+								<div class="home_course_text">
+									<?php 
+									echo  get_the_title();
+									?>
+								</div>
+								<?php endif;
+								?>
+								</div>
+								</a>
+								</div>
+								<?php								
+							}
+							else
+							{
+								//get screen size and  set count
+								?>
+								
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin20" >
+								<a href="<?php echo get_permalink($post->ID);?>" class="course" >
+									<div class="course-label">
+											<?php echo get_field('course_label'); ?>
+									</div>
+									<div class="course-title">
+									<?php echo get_the_title();?>
+									
+									</div>
+									<div class="course-description">
+									<?php 
+									echo get_the_excerpt();
+									?>
+									</div>
+									</a>
+								</div>
+								
+								<?php if($count == 1) { ?>
+								<div class="clearfix visible-sm-block"></div>
+								<?php } else if($count == 2) { ?>
+								<div class="clearfix visible-md-block"></div>
+								<?php } else if($count == 3) { ?>
+								
+								<div class="clearfix visible-lg-block"></div>
+								<?php }  ?>
+								
+								
+								
+								
+								<?php								
+								$count++;								
+							}
+							
+						}
+						echo '</div>';
+						/* Restore original Post Data */
+						wp_reset_postdata();
+						
+						if($count != 0)
+						{
+							echo '</div>';	
+						}
+					}
+					?>
+					</div>
+					</div>
+					</div>
+					<?php
 				
 			endif;
-			
 	
 		endwhile;
 	
