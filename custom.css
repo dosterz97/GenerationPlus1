@@ -309,6 +309,10 @@ a:hover, a:active {
 	color:white;	
 }
 
+.course-group {
+	padding: 40px 0;
+}
+
 .course {
 	background-color:#1C1B41;
 	color:white;
@@ -394,7 +398,6 @@ a:hover, a:active {
 
 
 .home_courses {
-	background-color:red;	
 	max-height:300px;
 }
 
@@ -563,30 +566,6 @@ a:hover, a:active {
 }
 
 
-.swpm-forgot-pass-link a{
-	color:black;
-	font-size:18px;
-}
-
-.swpm-join-us-link a{
-	color:black;
-	font-size:18px;
-}
-
-.swpm-username-label {
-	margin-top:5px;	
-	font-size:18px;
-}
-
-.swpm-password-label {
-	font-size:18px;
-}
-
-.swpm-pw-reset-email-input {
-	margin:auto;
-	size:25px;
-}
-
-#swpm-registration-form label {
-	padding:20px 0;	
+#wpmem_login form > fieldset > div {
+	width: 100%;
 }

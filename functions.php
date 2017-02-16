@@ -354,7 +354,8 @@ function templateStuff(){
 								elseif(get_sub_field('price')=='$25'): ?>
 									<div class="col-sm-3"></div>
 									<div class="col-xs-12 col-sm-6 sign_up_button" style="background-color:<?php echo get_sub_field('color'); ?>">
-											<?php echo do_shortcode('[swpm_payment_button id=225]');?>							
+											<a href="https://www.paypal.com/webapps/shoppingcart?xclick_params=bG9naW5fZW1haWwlM2Rkb3N0ZXJ6OTclMjU0MGdtYWlsJTJlY29tJTI2Y21kJTNkX3hjbGljayUyNmNoYXJzZXQlM2R1dGYlMmQ4JTI2Ym4lM2RUaXBzYW5kVHJpY2tzX1NQJTI2YnVzaW5lc3MlM2Rkb3N0ZXJ6OTclMjU0MGdtYWlsJTJlY29tJTI2YW1vdW50JTNkMCUyNmN1cnJlbmN5X2NvZGUlM2RVU0QlMjZpdGVtX251bWJlciUzZDIyNSUyNml0ZW1fbmFtZSUzZEJ1eSUyNTIwTm93JTI2bm9fc2hpcHBpbmclM2QxJTI2bm90aWZ5X3VybCUzZGh0dHAlMjUzYSUyZiUyZmxvY2FsaG9zdCUyZkdlbjElMmYlMjUzZnN3cG1fcHJvY2Vzc19pcG4lMjUzZDElMjZyZXR1cm4lM2Rsb2NhbGhvc3QlMmZHZW4xJTJmd3AlMmRhZG1pbiUyNmNhbmNlbF9yZXR1cm4lM2RodHRwJTI1M2ElMmYlMmZsb2NhbGhvc3QlMmZHZW4xJTI2Y3VzdG9tJTNkc3Vic2NfcmVmJTI1M2Q0JTI1MjZ1c2VyX2lwJTI1M2QlMjUzYSUyNTNhMSUyNiUyNndhX3R5cGUlM2RCdXlOb3clMjY&flowlogging_id=c9540faf34c90&mfid=1483992591050_2e8ca2b0ec760#/checkout/openButton"><?php echo get_sub_field('button'); ?></a>	
+											<!--//do_shortcode('[swpm_payment_button id=225]');-->							
 									</div>
 									<div class="col-sm-3"></div>								
 								<?php endif;?>
@@ -500,15 +501,14 @@ function templateStuff(){
 				$args = array('post_type' => 'courses', 'posts_per_page' => -1);
 					$the_query = new WP_Query( $args );
 					?>
-					<div class="panel-group">
-					  <div class="panel panel-default container nopadding">
+					  <div class="container course-group">
 					  <?php
 					// The Loop
 					if ( $the_query->have_posts() ) {
 						while ( $the_query->have_posts() ) {
 							$the_query->the_post();
-							if(is_front_page())
-							{
+							//if(is_front_page())
+							//{
 								$image = get_field('course_image');
 								if( !empty($image) ): ?>
 								
@@ -526,7 +526,8 @@ function templateStuff(){
 								</a>
 								</div>
 								<?php								
-							}
+							//}
+							/*
 							else
 							{
 								//get screen size and  set count
@@ -564,19 +565,14 @@ function templateStuff(){
 								<?php								
 								$count++;								
 							}
+							*/
 							
 						}
-						echo '</div>';
 						/* Restore original Post Data */
 						wp_reset_postdata();
-						
-						if($count != 0)
-						{
-							echo '</div>';	
-						}
+
 					}
 					?>
-					</div>
 					</div>
 					</div>
 					<?php
